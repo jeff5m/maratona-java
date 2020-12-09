@@ -35,4 +35,22 @@ public class Calculator {
         System.out.println("n1: " + n1);
         System.out.println("n2: " + n2);
     }
+
+    public void sumArr(int... numbers) {
+        int sum = 0;
+        for(int num: numbers) {
+            sum += num;
+        }
+        System.out.println(sum);
+    }
+
+    public void sumArr2TypesData(int n, int... numbers) {
+        int sum = 0;
+        for(int num: numbers) {
+            sum += num;
+        }
+        System.out.println(n);
+        System.out.println(sum);
+    }
+
 }
