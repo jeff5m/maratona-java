@@ -17,15 +17,15 @@ public class Student {
 
     public void isApproved() {
         double average = 0;
-        if (scores == null) {
+        if (this.scores == null) {
             System.out.println("Sem notas cadastradas");
             return;
         }
 
-        for (double score : scores) {
+        for (double score : this.scores) {
             average += score;
         }
-        average /= scores.length;
+        average /= this.scores.length;
         if (average > 6) {
             System.out.println("\nAluno(a) " + this.name + " foi aprovado(a) com media " + average);
         } else {
