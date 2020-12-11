@@ -1,9 +1,9 @@
 package br.com.abc.javacore.methodsintro.classes;
 
 public class Student {
-    public String name;
-    public int age;
-    public double[] scores;
+    private String name;
+    private int age;
+    private double[] scores;
 
     public void printStudent() {
         System.out.println("Nome: " + this.name);
@@ -31,5 +31,34 @@ public class Student {
         } else {
             System.out.println("\nAluno(a) " + this.name + " foi reprovado(a) com media " + average);
         }
+    }
+
+//    getters and setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        if (age < 0) {
+            System.out.println("idade invalida");
+            return;
+        }
+        this.age = age;
+    }
+
+    public void setScores(double[] scores) {
+        this.scores = scores;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    public double[] getScores() {
+        return this.scores;
     }
 }
