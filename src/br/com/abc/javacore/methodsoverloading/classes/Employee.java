@@ -6,6 +6,17 @@ public class Employee {
     private double salary;
     private String rg;
 
+    public Employee(String name, String cpf, double salary, String rg) {
+        this.name = name;
+        this.cpf = cpf;
+        this.salary = salary;
+        this.rg = rg;
+    }
+
+    public Employee() {
+
+    }
+
     public void init(String name, String cpf, double salary) {
         this.name = name;
         this.cpf = cpf;
