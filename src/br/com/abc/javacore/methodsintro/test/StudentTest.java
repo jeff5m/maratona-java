@@ -10,6 +10,8 @@ public class StudentTest {
         student.setScores(new double[]{7.3, 6.9, 7.4});
 
         student.printStudent();
-        student.isApproved();
+        student.calculateAverage();
+
+        System.out.println(student.isApproved());
     }
 }

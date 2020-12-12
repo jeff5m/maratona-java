@@ -4,6 +4,7 @@ public class Student {
     private String name;
     private int age;
     private double[] scores;
+    private boolean approved;
 
     public void printStudent() {
         System.out.println("Nome: " + this.name);
@@ -15,7 +16,7 @@ public class Student {
         }
     }
 
-    public void isApproved() {
+    public void calculateAverage() {
         double average = 0;
         if (this.scores == null) {
             System.out.println("Sem notas cadastradas");
@@ -27,8 +28,10 @@ public class Student {
         }
         average /= this.scores.length;
         if (average > 6) {
+            this.approved = true;
             System.out.println("\nAluno(a) " + this.name + " foi aprovado(a) com media " + average);
         } else {
+            this.approved = false;
             System.out.println("\nAluno(a) " + this.name + " foi reprovado(a) com media " + average);
         }
     }
@@ -60,5 +63,9 @@ public class Student {
 
     public double[] getScores() {
         return this.scores;
+    }
+
+    public boolean isApproved() {  // for boolean types, instead of get, we use is. Set remains.
+        return this.approved;
     }
 }
