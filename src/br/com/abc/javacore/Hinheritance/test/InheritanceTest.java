@@ -6,10 +6,9 @@ import br.com.abc.javacore.Hinheritance.classes.Person;
 
 public class InheritanceTest {
     public static void main(String[] args) {
-        Person person = new Person();
+        Person person = new Person("Carlos");
         Address address = new Address();
 
-        person.setName("Carlos");
         person.setCpf("111.222.333-44");
         address.setStreet("rua 1");
         address.setNeighborhood("Bairro 4");
@@ -18,9 +17,8 @@ public class InheritanceTest {
 
         System.out.println("-------------------------------------");
 
-        Employee employee = new Employee();
+        Employee employee = new Employee("Marise");
 
-        employee.setName("Marise");
         employee.setCpf("777.888.999-10");
         employee.setSalary(4500.34);
         employee.setAddress(address);

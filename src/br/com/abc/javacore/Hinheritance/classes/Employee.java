@@ -3,6 +3,10 @@ package br.com.abc.javacore.Hinheritance.classes;
 public class Employee extends Person {
     private double salary;
 
+    public Employee(String name) {
+        super(name);
+    }
+
     public void print() {
         super.print();
         System.out.println("Salario: " + this.salary);
