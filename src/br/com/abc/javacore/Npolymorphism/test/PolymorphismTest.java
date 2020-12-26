@@ -11,9 +11,12 @@ public class PolymorphismTest {
         Salesman salesman = new Salesman("Carlos Demetrio", 1800, 14728);
         PaymentReport report = new PaymentReport();
 
-//        Widening casting
-        Employee employee = manager;
-        System.out.println(manager.getProfitShare());
+        Employee employee;
+        employee = manager;
+        System.out.println(employee);
+        employee = salesman;
+        System.out.println(employee);
+        System.out.println("-------------------------------------------");
 
         report.GenericPaymentReport(manager);
         System.out.println("-------------------------------------------");
