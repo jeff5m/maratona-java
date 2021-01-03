@@ -9,9 +9,13 @@ public class RuntimeExceptionTest {
             System.out.println(a/b);
         }
 
-        int[] arr = new int[2];
+        try {
+            int[] arr = new int[2];
+            System.out.println(arr[2]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
 
-        System.out.println(arr[2]);
         System.out.println(o.toString());
     }
 }
