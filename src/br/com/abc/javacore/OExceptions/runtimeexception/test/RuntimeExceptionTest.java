@@ -2,20 +2,21 @@ package br.com.abc.javacore.OExceptions.runtimeexception.test;
 
 public class RuntimeExceptionTest {
     public static void main(String[] args) {
-        Object o = null;
-        int a = 10;
-        int b = 0;
-        if (b != 0) {
-            System.out.println(a/b);
-        }
 
         try {
-            int[] arr = new int[2];
-            System.out.println(arr[2]);
-        } catch (ArrayIndexOutOfBoundsException e) {
+            division(10,0);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
-        System.out.println(o.toString());
+    }
+
+    private static void division(int n1, int n2) {
+        if (n2 == 0) {
+            throw new IllegalArgumentException("Passe um valor diferente de 0");
+        }
+        int result = n1/n2;
+        System.out.println(result);
     }
 }
