@@ -23,5 +23,22 @@ public class WrappersTest {
         Character wrapperChar2 = new Character('A');
         Boolean wrapperBoolean = true;
         Boolean wrapperBoolean2 = new Boolean("tRue");
+
+//        Wrapper classes have many utilities methods
+
+        String value = "45";
+        Float f = Float.parseFloat(value);
+        System.out.println(f);
+
+        Long n1 = Long.valueOf(10L);
+        System.out.println(n1);
+
+        System.out.println(Character.isDigit('9'));
+        System.out.println(Character.isLetter('1'));
+        System.out.println(Character.isLetterOrDigit('@'));
+        System.out.println(Character.isUpperCase('f'));
+        System.out.println(Character.isLowerCase('f'));
+        System.out.println(Character.toUpperCase('f'));
+
     }
 }
