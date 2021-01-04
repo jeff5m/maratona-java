@@ -8,26 +8,19 @@ public class MultipleRuntimeExceptionTest {
     public static void main(String[] args) {
         try {
             throw new IndexOutOfBoundsException();
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (IllegalArgumentException | IndexOutOfBoundsException | ArithmeticException exception) {
             System.out.println("Dentro de ArrayIndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException exception) {
-            System.out.println("Dentro de IndexOutOfBoundsException");
-        } catch (IllegalArgumentException exception) {
-            System.out.println("Dentro de IllegalArgumentException");
-        } catch (ArithmeticException exception) {
-            System.out.println("Dentro de ArithmeticException");
         }
         System.out.println("final do programa");
 
         try {
             maybeThrowAnException();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException | IOException e) {
+
         }
     }
-    private static void maybeThrowAnException() throws SQLException, FileNotFoundException {
+
+    private static void maybeThrowAnException() throws SQLException, IOException {
 
     }
 }
