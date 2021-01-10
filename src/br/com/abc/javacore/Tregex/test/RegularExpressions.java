@@ -20,6 +20,7 @@ public class RegularExpressions {
           | - add or comparison
           $ - end line
           . - joker, can replace anything
+          ^ - negation
 */
 
 //      hexadecimal number regex
@@ -36,6 +37,12 @@ public class RegularExpressions {
         String regexDate = "\\d{2}/\\d{2}/\\d{2,4}";
         String textDate = "05/10/2010 05/05/2015 1/1/01 01/05/95";
         printRegex(textDate, regexDate);
+
+        String regexNegation = "proj([^,])*";
+        String textNegation = "proj1.bkp, proj1.java, proj1.class, proj1final.java, proj2.bkp, proj3.java, diagram, text, photo";
+
+        printRegex(textNegation, regexNegation);
+
     }
 
     private static void printRegex(String text, String regex) {
