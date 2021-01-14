@@ -1,5 +1,6 @@
 package br.com.abc.javacore.Xnio.test;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -14,5 +15,8 @@ public class PathTest {
         System.out.println(p2.toAbsolutePath());
         System.out.println(p3.toAbsolutePath());
         System.out.println(p4.toAbsolutePath());
+
+        File file = p4.toFile();
+        Path path = file.toPath();
     }
 }
