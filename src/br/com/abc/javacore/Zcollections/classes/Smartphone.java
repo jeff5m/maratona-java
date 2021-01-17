@@ -19,7 +19,18 @@ public class Smartphone {
           * Consistent: for any non-null reference values, if x.equals(y) == true, doesn't matter how many times that
              invocation has been made.
           * for any non-null reference value x, x.equals(null) == false.
+
+        hashCode():
+          * If x.equals(y) == true, then x.hashCode() must be == y.hashCode().
+          * If x.hashCode() == y.hashCode(), x.equals(y) do not need to be true because could be more values store in that key.
+          * If x.equals(y) == false, hashCode is irrelevant.
+          * If x.hashCode() != y.hashCode(), x.equals(y) must be false.
      */
+
+    @Override
+    public int hashCode() {
+        return IMEI != null ? IMEI.hashCode() : 1;
+    }
 
     @Override
     public boolean equals(Object obj) {
