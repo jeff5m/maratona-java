@@ -44,6 +44,14 @@ public class Smartphone {
         return IMEI != null && IMEI.equals(otherSmartphone.getIMEI());
     }
 
+    @Override
+    public String toString() {
+        return "Smartphone{" +
+                "name='" + name + '\'' +
+                ", IMEI='" + IMEI + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
