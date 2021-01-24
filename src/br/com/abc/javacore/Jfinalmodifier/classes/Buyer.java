@@ -5,7 +5,7 @@ public class Buyer {
 
     @Override
     public String toString() {
-        return "Buyer{" +
+        return "BuyerDB{" +
                 "name='" + name + '\'' +
                 '}';
     }
