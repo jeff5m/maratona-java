@@ -62,7 +62,7 @@ public class BuyerDB {
         }
     }
 
-    public static List<Buyer> findByName() {
+    public static List<Buyer> selectAll() {
 //        this query could return the data using *, but that way we know exactly the data that we are dealing in the resultSet
         String sql = "SELECT id, name, cpf FROM maratona_java.buyer;";
         Connection conn = ConnectionFactory.getConnection();

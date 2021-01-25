@@ -33,7 +33,7 @@ public class ConnectionTest {
     }
 
     public static List<Buyer> selectAll() {
-        return BuyerDB.findByName();
+        return BuyerDB.selectAll();
     }
 
     public static List<Buyer> findByName(String searchTerm) {
