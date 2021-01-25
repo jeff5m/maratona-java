@@ -3,11 +3,17 @@ package br.com.abc.javacore.ZZCjdbc.test;
 import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.db.BuyerDB;
 
+import java.util.List;
+
 public class ConnectionTest {
     public static void main(String[] args) {
 //        insert();
 //        delete();
-        update();
+//        update();
+        List<Buyer> buyerList = selectAll();
+        System.out.println(buyerList);
+        List<Buyer> buyerList2 = findByName("a");
+        System.out.println(buyerList2);
     }
 
     public static void insert() {
@@ -22,7 +28,15 @@ public class ConnectionTest {
     }
 
     public static void update() {
-        Buyer buyer = new Buyer(1,"000.000.000-11","MARIA");
+        Buyer buyer = new Buyer(1, "000.000.000-11", "MARIA");
         BuyerDB.update(buyer);
+    }
+
+    public static List<Buyer> selectAll() {
+        return BuyerDB.findByName();
+    }
+
+    public static List<Buyer> findByName(String searchTerm) {
+        return BuyerDB.findByName(searchTerm);
     }
 }

@@ -20,6 +20,15 @@ public class Buyer {
     }
 
     @Override
+    public String toString() {
+        return "Buyer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cpf='" + cpf + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

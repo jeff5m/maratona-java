@@ -1,10 +1,7 @@
 package br.com.abc.javacore.ZZCjdbc.conn;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ConnectionFactory {
     //    java.sql main interfaces and classes:
@@ -38,6 +35,16 @@ public class ConnectionFactory {
         try {
             if (statement != null)
                 statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void close(Connection connection, Statement statement, ResultSet resultSet) {
+        close(connection, statement);
+        try {
+            if (resultSet != null)
+                resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

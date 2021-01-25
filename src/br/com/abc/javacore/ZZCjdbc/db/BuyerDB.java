@@ -4,8 +4,11 @@ import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.conn.ConnectionFactory;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuyerDB {
     public static void save(Buyer buyer) {
@@ -57,5 +60,42 @@ public class BuyerDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<Buyer> findByName() {
+//        this query could return the data using *, but that way we know exactly the data that we are dealing in the resultSet
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer;";
+        Connection conn = ConnectionFactory.getConnection();
+        List<Buyer> buyerList = new ArrayList<>();
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet resultSet = stat.executeQuery(sql);
+            while (resultSet.next()) {
+                buyerList.add(new Buyer(resultSet.getInt("id"), resultSet.getString("cpf"), resultSet.getString("name")));
+            }
+            ConnectionFactory.close(conn, stat, resultSet);
+            return buyerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Buyer> findByName(String searchTerm) {
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer WHERE name LIKE '%" + searchTerm + "%'";
+        Connection conn = ConnectionFactory.getConnection();
+        List<Buyer> buyerList = new ArrayList<>();
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet resultSet = stat.executeQuery(sql);
+            while (resultSet.next()) {
+                buyerList.add(new Buyer(resultSet.getInt("id"), resultSet.getString("cpf"), resultSet.getString("name")));
+            }
+            ConnectionFactory.close(conn, stat, resultSet);
+            return buyerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
