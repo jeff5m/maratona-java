@@ -3,10 +3,7 @@ package br.com.abc.javacore.ZZCjdbc.db;
 import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.conn.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,5 +94,59 @@ public class BuyerDB {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void selectMetaData() {
+        String sql = "SELECT * FROM maratona_java.buyer;";
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+//            outside a while loop, rs.next() will bring only the first record in DB
+            rs.next();
+            int columnsNumber = rsmd.getColumnCount();
+            System.out.println("quantidade de colunas: " + columnsNumber);
+//            the first line is 1, not 0
+            for (int i = 1; i <= columnsNumber; i++) {
+                System.out.println("tabela: " + rsmd.getTableName(i));
+                System.out.println("nome da coluna: " + rsmd.getColumnName(i));
+                System.out.println("tamanho da coluna: " + rsmd.getColumnDisplaySize(i));
+            }
+            ConnectionFactory.close(conn, stat);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void checkDriverStatus() {
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            DatabaseMetaData dbMetaData = conn.getMetaData();
+//            the code below check what is the type of ResultSet
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) {
+                System.out.println("suporta TYPE_FORWARD_ONLY");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                    System.out.println("e tambem suporta CONCUR_UPDATABLE");
+                }
+            }
+
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) {
+                System.out.println("suporta TYPE_SCROLL_INSENSITIVE");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    System.out.println(" e tambem suporta CONCUR_UPDATABLE");
+                }
+            }
+
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) {
+                System.out.println("suporta TYPE_SCROLL_SENSITIVE");
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    System.out.println(" e tambem suporta CONCUR_UPDATABLE");
+                }
+            }
+            ConnectionFactory.close(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -7,13 +7,17 @@ import java.util.List;
 
 public class ConnectionTest {
     public static void main(String[] args) {
-//        insert();
-//        delete();
-//        update();
+/*
+        insert();
+        delete();
+        update();
         List<Buyer> buyerList = selectAll();
         System.out.println(buyerList);
         List<Buyer> buyerList2 = findByName("a");
         System.out.println(buyerList2);
+        BuyerDB.selectMetaData();
+ */
+        BuyerDB.checkDriverStatus();
     }
 
     public static void insert() {
