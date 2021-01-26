@@ -16,7 +16,8 @@ public class ConnectionTest {
 //        System.out.println(buyerList2);
 //        BuyerDB.selectMetaData();
 //        BuyerDB.checkDriverStatus();
-        BuyerDB.cursorPointerTypeScrollTest();
+//        BuyerDB.cursorPointerTypeScrollTest();
+        BuyerDB.updateNamesToLowerCase();
     }
 
     public static void insert() {

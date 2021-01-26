@@ -195,4 +195,47 @@ public class BuyerDB {
             e.printStackTrace();
         }
     }
+
+    public static void updateNamesToLowerCase() {
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer;";
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+
+            Statement stat = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stat.executeQuery(sql);
+            if (rs.next()) {
+//                update the specific value on the rs, then update in the DB
+                rs.updateString("name", rs.getString("name").toLowerCase());
+//                if we want to use updateString() more than once, the operation result is not trustable. So, before
+//                update, if we need to cancel in a specific row, we must call rs.cancelRowUpdates(), then make the update.
+//                This method can only be call one time
+                rs.updateRow();
+            }
+            rs.beforeFirst();
+            while (rs.next()) {
+                System.out.println(rs.getString("name"));
+            }
+            System.out.println("--------------------");
+
+//            insert new record.
+//            moveToInsertRow() method moves the cursor to a temp row where we can edit the columns values.
+//            rs.absolute(2);
+//            String name = rs.getString("name");
+//            rs.moveToInsertRow();
+//            rs.updateString("name", name.toUpperCase()); // set the name in the temp row
+//            rs.updateString("cpf", "888.888.888-88");
+//            rs.insertRow();
+//            rs.moveToCurrentRow();
+//            System.out.println(rs.getString("name") + " | row: " + rs.getRow());
+//            System.out.println("--------------------");
+
+//            delete a record
+            rs.absolute(9);
+            rs.deleteRow();
+
+            ConnectionFactory.close(conn, stat, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
