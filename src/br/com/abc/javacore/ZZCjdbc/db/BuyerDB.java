@@ -47,7 +47,7 @@ public class BuyerDB {
             return;
         }
 
-        String sql = "UPDATE `maratona_java`.`buyer` SET `cpf` = '" + buyer.getCpf() + "', `name` = '" + buyer.getName() + "' WHERE (`id` = '" + buyer.getId() + "');";
+        String sql = "UPDATE `maratona_java`.`buyer` SET `cpf` = '" + buyer.getCpf() + "', `name` = '" + buyer.getName() + "' WHERE (`id` = '" + buyer.getId() + "')";
         Connection conn = ConnectionFactory.getConnection();
         try {
             Statement stat = conn.createStatement();
@@ -57,6 +57,28 @@ public class BuyerDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void updatePreparedStatement(Buyer buyer) {
+        if (buyer == null || buyer.getId() == null) {
+            System.out.println("Ops! Não foi possível atualizar o registro!");
+            return;
+        }
+
+        String sql = "UPDATE `maratona_java`.`buyer` SET `cpf` = ?, `name` = ? WHERE `id` = ?";
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            PreparedStatement prepStat = conn.prepareStatement(sql);
+            prepStat.setString(1, buyer.getCpf());
+            prepStat.setString(2, buyer.getName());
+            prepStat.setInt(3, buyer.getId());
+            prepStat.executeUpdate();
+            ConnectionFactory.close(conn, prepStat);
+            System.out.println("Registro atualizado com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static List<Buyer> selectAll() {
