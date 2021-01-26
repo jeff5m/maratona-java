@@ -118,6 +118,33 @@ public class BuyerDB {
         return null;
     }
 
+//    to use DB stored procedures, we use a CallableStatement
+//    procedure that is call in the method .findByNameCallableStatement():
+//    DELIMITER //
+//      CREATE PROCEDURE SP_GetBuyersByName(searchTerm varchar(100))
+//      BEGIN
+//      SELECT * FROM buyer WHERE name like searchTerm;
+//      END //
+//    DELIMITER ;
+    public static List<Buyer> findByNameCallableStatement(String searchTerm) {
+        String sql = "CALL `maratona_java`.`SP_GetBuyersByName`(?)";
+        Connection conn = ConnectionFactory.getConnection();
+        List<Buyer> buyerList = new ArrayList<>();
+        try {
+            CallableStatement callStat = conn.prepareCall(sql);
+            callStat.setString(1, "%" + searchTerm + "%");
+            ResultSet rs = callStat.executeQuery();
+            while (rs.next()) {
+                buyerList.add(new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
+            }
+            ConnectionFactory.close(conn, callStat, rs);
+            return buyerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void selectMetaData() {
         String sql = "SELECT * FROM maratona_java.buyer;";
         Connection conn = ConnectionFactory.getConnection();

@@ -18,7 +18,8 @@ public class ConnectionTest {
 //        BuyerDB.checkDriverStatus();
 //        BuyerDB.cursorPointerTypeScrollTest();
 //        BuyerDB.updateNamesToLowerCase();
-        System.out.println(BuyerDB.findByNamePreparedStatement("onh"));
+//        System.out.println(BuyerDB.findByNamePreparedStatement("onh"));
+        System.out.println(BuyerDB.findByNameCallableStatement("thew"));
     }
 
     public static void insert() {
