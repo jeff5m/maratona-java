@@ -96,6 +96,28 @@ public class BuyerDB {
         return null;
     }
 
+    public static List<Buyer> findByNamePreparedStatement(String searchTerm) {
+//        prepared statement is faster because precompile the query and is safer because don't use apostrophes, that way
+//        prevent SQL injections attacks (BuyerDB.findByNamePreparedStatement("ohn' OR 'X'='X")).
+//        To replace values, instead of concatenate strings, we use the placeholder '?'
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer WHERE name LIKE ?";
+        Connection conn = ConnectionFactory.getConnection();
+        List<Buyer> buyerList = new ArrayList<>();
+        try {
+            PreparedStatement prepStat = conn.prepareStatement(sql);
+            prepStat.setString(1, "%" + searchTerm + "%");
+            ResultSet rs = prepStat.executeQuery();
+            while (rs.next()) {
+                buyerList.add(new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
+            }
+            ConnectionFactory.close(conn, prepStat, rs);
+            return buyerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void selectMetaData() {
         String sql = "SELECT * FROM maratona_java.buyer;";
         Connection conn = ConnectionFactory.getConnection();
