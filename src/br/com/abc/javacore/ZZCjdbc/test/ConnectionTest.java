@@ -7,21 +7,20 @@ import java.util.List;
 
 public class ConnectionTest {
     public static void main(String[] args) {
-/*
-        insert();
-        delete();
-        update();
-        List<Buyer> buyerList = selectAll();
-        System.out.println(buyerList);
-        List<Buyer> buyerList2 = findByName("a");
-        System.out.println(buyerList2);
-        BuyerDB.selectMetaData();
- */
-        BuyerDB.checkDriverStatus();
+//        insert();
+//        delete();
+//        update();
+//        List<Buyer> buyerList = selectAll();
+//        System.out.println(buyerList);
+//        List<Buyer> buyerList2 = findByName("a");
+//        System.out.println(buyerList2);
+//        BuyerDB.selectMetaData();
+//        BuyerDB.checkDriverStatus();
+        BuyerDB.cursorPointerTypeScrollTest();
     }
 
     public static void insert() {
-        Buyer buyer = new Buyer("111.222.333-44", "Maria");
+        Buyer buyer = new Buyer("000.000.000-00", "Gilbert");
         BuyerDB.save(buyer);
     }
 

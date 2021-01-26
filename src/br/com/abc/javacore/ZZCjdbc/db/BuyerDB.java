@@ -149,4 +149,50 @@ public class BuyerDB {
             e.printStackTrace();
         }
     }
+
+    public static void cursorPointerTypeScrollTest() {
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer";
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            Statement stat = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stat.executeQuery(sql);
+//            moves the cursor to last line. "ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY" must be added
+//            as argument in .createStatement() method
+            if (rs.last()) {
+                System.out.println("ultima linha: " + new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
+                System.out.println("numero da ultima linha: " + rs.getRow());
+            }
+            System.out.println("-----------------------------------------------------");
+//            to return to first line:
+            System.out.println("retornou para primeira linha? " + rs.first());
+            System.out.println("posição atual: " + rs.getRow());
+            System.out.println("-----------------------------------------------------");
+
+//            .absolute() moves the cursor for any position in the rs
+            System.out.println("moveu para linha 4? " + rs.absolute(4));
+            System.out.println("posição atual: " + rs.getRow());
+            System.out.println("linha 4: " + new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
+            System.out.println("-----------------------------------------------------");
+
+//            moves the cursor n positions forward or backward
+            System.out.println("moveu 2 linhas a frente? " + rs.relative(2));
+            System.out.println("posição atual: " + rs.getRow());
+            System.out.println("-----------------------------------------------------");
+
+//            check the position of the cursor
+            System.out.println(rs.isFirst());
+            System.out.println(rs.isBeforeFirst());
+            System.out.println(rs.isLast());
+            System.out.println(rs.isAfterLast());
+            System.out.println("-----------------------------------------------------");
+
+//            to iterate the rs in backwards
+            rs.afterLast();
+            while (rs.previous())
+                System.out.println(new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
+            ConnectionFactory.close(conn, stat, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
