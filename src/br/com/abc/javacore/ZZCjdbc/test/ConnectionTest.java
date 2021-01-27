@@ -19,7 +19,9 @@ public class ConnectionTest {
 //        BuyerDB.cursorPointerTypeScrollTest();
 //        BuyerDB.updateNamesToLowerCase();
 //        System.out.println(BuyerDB.findByNamePreparedStatement("onh"));
-        System.out.println(BuyerDB.findByNameCallableStatement("thew"));
+//        System.out.println(BuyerDB.findByNameCallableStatement("thew"));
+//        System.out.println(BuyerDB.findByNameRowSet("thew"));
+        BuyerDB.updateRowSet(new Buyer(2,"123.456.789-12", "Mathew UpdateRowSet"));
     }
 
     public static void insert() {
@@ -34,8 +36,9 @@ public class ConnectionTest {
     }
 
     public static void update() {
-        Buyer buyer = new Buyer(1, "000.000.000-11", "MARIA");
-        BuyerDB.update(buyer);
+        Buyer buyer = new Buyer(1, "111.000.000-11", "MARIA");
+//        BuyerDB.update(buyer);
+        BuyerDB.updatePreparedStatement(buyer);
     }
 
     public static List<Buyer> selectAll() {

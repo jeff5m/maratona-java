@@ -1,8 +1,10 @@
 package br.com.abc.javacore.ZZCjdbc.db;
 
 import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
+import br.com.abc.javacore.ZZCjdbc.classes.MyRowSetListener;
 import br.com.abc.javacore.ZZCjdbc.conn.ConnectionFactory;
 
+import javax.sql.rowset.JdbcRowSet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,32 @@ public class BuyerDB {
 
     }
 
+    public static void updateRowSet(Buyer buyer) {
+        if (buyer == null || buyer.getId() == null) {
+            System.out.println("Ops! Não foi possível atualizar o registro!");
+            return;
+        }
+
+//        String sql = "UPDATE `maratona_java`.`buyer` SET `cpf` = ?, `name` = ? WHERE `id` = ?";
+        String sql = "SELECT * FROM `maratona_java`.`buyer` WHERE id = ?";
+        JdbcRowSet jdbcRowSet = ConnectionFactory.getRowSetConnection();
+        jdbcRowSet.addRowSetListener(new MyRowSetListener());
+        try {
+            jdbcRowSet.setCommand(sql);
+//            jdbcRowSet.setString(1, buyer.getCpf());
+//            jdbcRowSet.setString(2, buyer.getName());
+            jdbcRowSet.setInt(1, buyer.getId());
+            jdbcRowSet.execute();
+            jdbcRowSet.next();
+            jdbcRowSet.updateString("name", buyer.getName());
+            jdbcRowSet.updateRow();
+            ConnectionFactory.close(jdbcRowSet);
+            System.out.println("Registro atualizado com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Buyer> selectAll() {
 //        this query could return the data using *, but that way we know exactly the data that we are dealing in the resultSet
         String sql = "SELECT id, name, cpf FROM maratona_java.buyer;";
@@ -133,6 +161,28 @@ public class BuyerDB {
                 buyerList.add(new Buyer(rs.getInt("id"), rs.getString("cpf"), rs.getString("name")));
             }
             ConnectionFactory.close(conn, prepStat, rs);
+            return buyerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Buyer> findByNameRowSet(String searchTerm) {
+//        rowSet is simpler then PreparedStatement but it does have some differences from it:
+//          we can't use Update, Insert or Delete operations in our DB
+        String sql = "SELECT id, name, cpf FROM maratona_java.buyer WHERE name LIKE ?";
+        JdbcRowSet jdbcRowSet = ConnectionFactory.getRowSetConnection();
+        jdbcRowSet.addRowSetListener(new MyRowSetListener());
+        List<Buyer> buyerList = new ArrayList<>();
+        try {
+            jdbcRowSet.setCommand(sql);
+            jdbcRowSet.setString(1, "%" + searchTerm + "%");
+            jdbcRowSet.execute();
+            while (jdbcRowSet.next()) {
+                buyerList.add(new Buyer(jdbcRowSet.getInt("id"), jdbcRowSet.getString("cpf"), jdbcRowSet.getString("name")));
+            }
+            ConnectionFactory.close(jdbcRowSet);
             return buyerList;
         } catch (SQLException e) {
             e.printStackTrace();
