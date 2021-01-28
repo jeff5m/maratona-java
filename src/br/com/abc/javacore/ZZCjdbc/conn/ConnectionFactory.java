@@ -1,7 +1,8 @@
 package br.com.abc.javacore.ZZCjdbc.conn;
 
-
+import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.JdbcRowSet;
+import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 
@@ -33,6 +34,24 @@ public class ConnectionFactory {
             jdbcRowSet.setUsername(username);
             jdbcRowSet.setPassword(password);
             return jdbcRowSet;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+//    I couldn't use the method taught in class. See the implementation in "updateCachedRowSet()" in BuyerBB
+    public static CachedRowSet getCachedRowSetConnection() {
+        String url = System.getenv("MYSQL_URL");
+        String username = System.getenv("MYSQL_USERNAME");
+        String password = System.getenv("MYSQL_PASSWORD");
+        try {
+            url += "?useSSL=false&relaxAutoCommit=false";
+            CachedRowSet cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
+            cachedRowSet.setUrl(url);
+            cachedRowSet.setUsername(username);
+            cachedRowSet.setPassword(password);
+            return cachedRowSet;
         } catch (SQLException e) {
             e.printStackTrace();
         }

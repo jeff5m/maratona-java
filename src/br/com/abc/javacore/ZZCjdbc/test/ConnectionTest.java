@@ -21,7 +21,7 @@ public class ConnectionTest {
 //        System.out.println(BuyerDB.findByNamePreparedStatement("onh"));
 //        System.out.println(BuyerDB.findByNameCallableStatement("thew"));
 //        System.out.println(BuyerDB.findByNameRowSet("thew"));
-        BuyerDB.updateRowSet(new Buyer(2,"123.456.789-12", "Mathew UpdateRowSet"));
+        BuyerDB.updateCachedRowSet(new Buyer(6,"123.456.789-12", "Maike"));
     }
 
     public static void insert() {

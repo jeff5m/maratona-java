@@ -4,7 +4,9 @@ import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.classes.MyRowSetListener;
 import br.com.abc.javacore.ZZCjdbc.conn.ConnectionFactory;
 
+import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.JdbcRowSet;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +105,34 @@ public class BuyerDB {
             jdbcRowSet.updateString("name", buyer.getName());
             jdbcRowSet.updateRow();
             ConnectionFactory.close(jdbcRowSet);
+            System.out.println("Registro atualizado com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateCachedRowSet(Buyer buyer) {
+        if (buyer == null || buyer.getId() == null) {
+            System.out.println("Ops! Não foi possível atualizar o registro!");
+            return;
+        }
+
+        String sql = "SELECT * FROM buyer WHERE `id` = ?";
+        Connection conn = ConnectionFactory.getConnection();
+        try {
+            CachedRowSet cachedRowSet = RowSetProvider.newFactory().createCachedRowSet();
+            cachedRowSet.setCommand(sql);
+            cachedRowSet.setInt(1, buyer.getId());
+            cachedRowSet.execute(conn);
+            conn.setAutoCommit(false);
+            cachedRowSet.next();
+            cachedRowSet.updateString("name", buyer.getName());
+            cachedRowSet.updateRow();
+//            Thread.sleep(8000); -> if the state of db change while we are disconnected, a SyncProviderException will be thrown.
+//            Because .acceptChanges() check the state to see if still is the same as before.
+            cachedRowSet.acceptChanges();
+//            no need to close the connection because CachedRowSet close by it self
+            ConnectionFactory.close(conn);
             System.out.println("Registro atualizado com sucesso");
         } catch (SQLException e) {
             e.printStackTrace();
