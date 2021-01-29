@@ -5,7 +5,7 @@ public class Buyer {
 
     @Override
     public String toString() {
-        return "BuyerDB{" +
+        return "BuyerDB_StudyReference{" +
                 "name='" + name + '\'' +
                 '}';
     }

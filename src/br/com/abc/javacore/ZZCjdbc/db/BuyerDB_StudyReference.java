@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyerDB {
+public class BuyerDB_StudyReference {
     public static void save(Buyer buyer) {
         String sql = "INSERT INTO `maratona_java`.`buyer` (`cpf`, `name`) VALUES ('" + buyer.getCpf() + "', '" + buyer.getName() + "');";
         Connection conn = ConnectionFactory.getConnection();
@@ -207,7 +207,7 @@ public class BuyerDB {
 
     public static List<Buyer> findByNamePreparedStatement(String searchTerm) {
 //        prepared statement is faster because precompile the query and is safer because don't use apostrophes, that way
-//        prevent SQL injections attacks (BuyerDB.findByNamePreparedStatement("ohn' OR 'X'='X")).
+//        prevent SQL injections attacks (BuyerDB_StudyReference.findByNamePreparedStatement("ohn' OR 'X'='X")).
 //        To replace values, instead of concatenate strings, we use the placeholder '?'
         String sql = "SELECT id, name, cpf FROM maratona_java.buyer WHERE name LIKE ?";
         Connection conn = ConnectionFactory.getConnection();
