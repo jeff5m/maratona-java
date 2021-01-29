@@ -3,6 +3,7 @@ package br.com.abc.javacore.ZZCjdbc.test;
 import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.db.BuyerDB;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ConnectionTest {
@@ -21,7 +22,12 @@ public class ConnectionTest {
 //        System.out.println(BuyerDB.findByNamePreparedStatement("onh"));
 //        System.out.println(BuyerDB.findByNameCallableStatement("thew"));
 //        System.out.println(BuyerDB.findByNameRowSet("thew"));
-        BuyerDB.updateCachedRowSet(new Buyer(6,"123.456.789-12", "Maike"));
+//        BuyerDB.updateCachedRowSet(new Buyer(6,"123.456.789-12", "Maike"));
+        try {
+            BuyerDB.saveTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void insert() {

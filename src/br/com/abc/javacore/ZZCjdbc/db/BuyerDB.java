@@ -27,6 +27,35 @@ public class BuyerDB {
         }
     }
 
+    public static void saveTransaction() throws SQLException {
+        String sql = "INSERT INTO maratona_java.buyer (cpf, name) VALUES ('TEST1', 'TEST1')";
+        String sql2 = "INSERT INTO maratona_java.buyer (cpf, name) VALUES ('TEST2', 'TEST2')";
+        String sql3 = "INSERT INTO maratona_java.buyer (cpf, name) VALUES ('TEST3', 'TEST3')";
+        Connection conn = ConnectionFactory.getConnection();
+        Savepoint savepoint = null;
+        try {
+            conn.setAutoCommit(false);
+            Statement stat = conn.createStatement();
+            stat.executeUpdate(sql);
+            savepoint = conn.setSavepoint("One");
+//           makes savepoint available again
+            conn.releaseSavepoint(savepoint);
+            stat.executeUpdate(sql2);
+            if(true)
+                throw new SQLException();
+            stat.executeUpdate(sql3);
+            conn.commit();
+            ConnectionFactory.close(conn, stat);
+            System.out.println("Registro tipo Transaction inserido com sucesso!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+//             if transaction fails, this method rollbacks DB to the previous state or, if a savepoint is passed as argument,
+//            to the point attributed to that savepoint. In that case we must commit the connection.
+            conn.rollback(savepoint);
+            conn.commit();
+        }
+    }
+
     public static void delete(Buyer buyer) {
         if (buyer == null || buyer.getId() == null) {
             System.out.println("Ops! Não foi possível excluir o registro!");
