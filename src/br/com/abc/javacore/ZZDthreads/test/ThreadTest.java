@@ -47,13 +47,23 @@ public class ThreadTest {
 //        ThreadExample t2 = new ThreadExample('b');
 //        ThreadExample t3 = new ThreadExample('c');
 //        ThreadExample t4 = new ThreadExample('d');
-        Thread t1 = new Thread(new ThreadExampleRunnable('a'));
+        Thread t1 = new Thread(new ThreadExampleRunnable('a')); // new
         Thread t2 = new Thread(new ThreadExampleRunnable('b'));
         Thread t3 = new Thread(new ThreadExampleRunnable('c'));
         Thread t4 = new Thread(new ThreadExampleRunnable('d'));
+//        runnable. The scheduler decides when this thread will be running. After that, only th thread itself can
+//        can decide if the state will be alter to waiting/blocking.
         t1.start();
         t2.start();
         t3.start();
         t4.start();
+ /*
+        Life cycle:
+                  waiting/blocking
+                   ↓           ↑
+        new -> runnable <-> running -> dead
+                                       ↓
+                              after execute .run()
+ */
     }
 }
