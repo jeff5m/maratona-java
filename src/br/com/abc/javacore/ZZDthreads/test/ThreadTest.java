@@ -35,25 +35,40 @@ class ThreadExampleRunnable implements Runnable {
             System.out.print(c);
             if (i % 100 == 0)
                 System.out.println();
+
+            if(!Thread.currentThread().getName().equals("t4"))
+                Thread.yield();
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }
 
 public class ThreadTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
 //        "class ThreadExample extends Thread" way
 //        ThreadExample t1 = new ThreadExample('a');
 //        ThreadExample t2 = new ThreadExample('b');
 //        ThreadExample t3 = new ThreadExample('c');
 //        ThreadExample t4 = new ThreadExample('d');
-        Thread t1 = new Thread(new ThreadExampleRunnable('a')); // new
-        Thread t2 = new Thread(new ThreadExampleRunnable('b'));
-        Thread t3 = new Thread(new ThreadExampleRunnable('c'));
-        Thread t4 = new Thread(new ThreadExampleRunnable('d'));
+        Thread t1 = new Thread(new ThreadExampleRunnable('a'),"T1"); // new
+        Thread t2 = new Thread(new ThreadExampleRunnable('b'),"T2");
+        Thread t3 = new Thread(new ThreadExampleRunnable('c'),"T3");
+        Thread t4 = new Thread(new ThreadExampleRunnable('d'),"T4");
 //        runnable. The scheduler decides when this thread will be running. After that, only th thread itself can
 //        can decide if the state will be alter to waiting/blocking.
+//        We can also define a priority for Threads. Priority is defined by the JVM specification. We should not develop
+//        our system based on that. The priority range goes from 1 (min) to 10 (max). To set a priority we can call
+//        the method setPriority() in the thread reference variable, passing as an argument the number that represents
+//        the priority, but its a good practice use some of the constant values: MIN_PRIORITY, NORM_PRIORITY, MAX_PRIORITY
+
+        t4.setPriority(Thread.MAX_PRIORITY);
         t1.start();
+        t1.join();
         t2.start();
         t3.start();
         t4.start();
@@ -65,5 +80,6 @@ public class ThreadTest {
                                        ↓
                               after execute .run()
  */
+
     }
 }
