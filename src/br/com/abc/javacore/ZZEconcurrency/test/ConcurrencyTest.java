@@ -1,19 +1,32 @@
 package br.com.abc.javacore.ZZEconcurrency.test;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 class Counter {
     private int count;
     private AtomicInteger atomicInteger = new AtomicInteger();
+    private Lock lock = new ReentrantLock(true);
 
     public void increment() {
-//        this way, is not guaranteed that the result will be the expected
+/*      this way, is not guaranteed that the result will be the expected
         count++;
-//        An alternative to synchronized is atomic integer that use CAS (compare and swap), which is thread safe.
-//        First the value is copy to a temp variable then incremented, then compare the temp variable value with the
-//        original. If it is different, the CPU will repeat the process without the interference of another thread.
-//        This is a better solution in performance matter the use synchronized in .increment()
-        atomicInteger.getAndIncrement();
+        An alternative to synchronized is atomic integer that use CAS (compare and swap), which is thread safe.
+        First the value is copy to a temp variable then incremented, then compare the temp variable value with the
+        original. If it is different, the CPU will repeat the process without the interference of another thread.
+        This is a better solution in performance matter the use synchronized in .increment()
+        atomicInteger.getAndIncrement()                                                                               */
+
+//        ReentrantLock does the same that synchronized, but is more complicated and advanced. Synchronized is more simple but
+//        some task can't be done with it.
+        lock.lock();
+        try {
+            count++;
+            atomicInteger.getAndIncrement();
+        } finally {
+            lock.unlock();
+        }
     }
 
     public int getCount() {
