@@ -4,6 +4,7 @@ import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.classes.Car;
 import br.com.abc.javacore.ZZCjdbc.classes.Car;
 import br.com.abc.javacore.ZZCjdbc.conn.ConnectionFactory;
+import br.com.abc.javacore.ZZCjdbc.interfaces.CarDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,9 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarDAO {
-
-    public static void save(Car car) {
+public class CarDAOImpl implements CarDAO {
+    @Override
+    public void save(Car car) {
         String sql = "INSERT INTO `maratona_java`.`car` (`license_plate`, `name`, `buyer_id`) VALUES (?, ?, ?)";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement prepStmt = conn.prepareStatement(sql)) {
@@ -28,7 +29,8 @@ public class CarDAO {
         }
     }
 
-    public static void delete(Car car) {
+    @Override
+    public void delete(Car car) {
         if (car == null || car.getId() == null) {
             System.out.println("Não foi possível excluir o registro!");
             return;
@@ -45,7 +47,8 @@ public class CarDAO {
 
     }
 
-    public static void update(Car car) {
+    @Override
+    public void update(Car car) {
         if (car == null || car.getId() == null) {
             System.out.println("Não foi possível atualizar o registro!");
             return;
@@ -63,7 +66,8 @@ public class CarDAO {
         }
     }
 
-    public static List<Car> selectAll() {
+    @Override
+    public List<Car> selectAll() {
         String sql = "SELECT id, license_plate, name, buyer_id FROM maratona_java.car;";
         List<Car> carList = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
@@ -80,7 +84,8 @@ public class CarDAO {
         return null;
     }
 
-    public static List<Car> searchByName(String searchTerm) {
+    @Override
+    public List<Car> searchByName(String searchTerm) {
         String sql = "SELECT id, license_plate, name, buyer_id FROM maratona_java.car WHERE name LIKE ?";
 
         List<Car> carList = new ArrayList<>();

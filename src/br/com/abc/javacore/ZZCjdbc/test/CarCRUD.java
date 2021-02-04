@@ -2,13 +2,15 @@ package br.com.abc.javacore.ZZCjdbc.test;
 
 import br.com.abc.javacore.ZZCjdbc.classes.Buyer;
 import br.com.abc.javacore.ZZCjdbc.classes.Car;
-import br.com.abc.javacore.ZZCjdbc.db.CarDAO;
+import br.com.abc.javacore.ZZCjdbc.db.CarDAOImpl;
+import br.com.abc.javacore.ZZCjdbc.interfaces.CarDAO;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CarCRUD {
     private static Scanner input = new Scanner(System.in);
+    private static CarDAO dao = new CarDAOImpl();
 
     public static void execute(int op) {
         switch (op) {
@@ -44,7 +46,7 @@ public class CarCRUD {
         System.out.println("Selecione o numero de um dos Compradores abaixo:");
         List<Buyer> buyerList = BuyerCRUD.list();
         car.setBuyer(buyerList.get(Integer.parseInt(input.nextLine())));
-        CarDAO.save(car);
+        dao.save(car);
         System.out.println();
     }
 
@@ -62,12 +64,12 @@ public class CarCRUD {
         if (!license_plate.isEmpty()) {
             car.setLicense_plate(license_plate);
         }
-        CarDAO.update(car);
+        dao.update(car);
         System.out.println();
     }
 
     private static List<Car> list() {
-        List<Car> carList = CarDAO.selectAll();
+        List<Car> carList = dao.selectAll();
         for (int i = 0; i < carList.size(); i++) {
             Car car = carList.get(i);
             System.out.println("[" + i + "] " + car.getName() + " " + car.getLicense_plate() + " " + car.getBuyer().getName());
@@ -77,7 +79,7 @@ public class CarCRUD {
     }
 
     private static void searchByName(String searchTerm) {
-        List<Car> carLIst = CarDAO.searchByName(searchTerm);
+        List<Car> carLIst = dao.searchByName(searchTerm);
         for (int i = 0; i < carLIst.size(); i++) {
             Car car = carLIst.get(i);
             System.out.println("[" + i + "] " + car.getName() + " " + car.getLicense_plate() + " " + car.getBuyer().getName());
@@ -93,7 +95,7 @@ public class CarCRUD {
         System.out.println("Tem certeza? Digite y para confirmar...");
         String confimation = input.nextLine();
         if (confimation.equalsIgnoreCase("y") || confimation.isEmpty())
-            CarDAO.delete(car);
+            dao.delete(car);
         else
             System.out.println("Comprador nao deletado");
 
