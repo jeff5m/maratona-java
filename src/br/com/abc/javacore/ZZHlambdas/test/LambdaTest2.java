@@ -2,12 +2,11 @@ package br.com.abc.javacore.ZZHlambdas.test;
 
 import br.com.abc.javacore.ZZHlambdas.classes.Car;
 
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntPredicate;
-import java.util.function.Predicate;
+import java.util.concurrent.Callable;
+import java.util.function.*;
 
 import static java.util.Arrays.asList;
 
@@ -25,11 +24,23 @@ public class LambdaTest2 {
         System.out.println(evens.test(1000));
         IntPredicate odds = (int i) -> i % 2 == 1;
         System.out.println(odds.test(3));
+        Predicate<String> predicate = (String s) -> colorsList.add(s);
+        predicate.test("AZUL");
+        System.out.println(colorsList);
+        Consumer<String> consumer = (s) -> colorsList.add(s);
+        consumer.accept("AMARELO");
+        System.out.println(colorsList);
+
+        Supplier<String> supplier1 = () -> "oi";
+        Supplier<Car> supplier2 = () -> new Car("Preto", 2019);
+        System.out.println(supplier1.get());
+        System.out.println(supplier2.get().getColor());
     }
 
 //    Some important Functional Interfaces:
 //    Predicate - useful to filter data
 //    Consumer - useful to access an element and do some operation on it
+//    Supplier - useful to return objects
     public static <T> void forEach(List<T> list, Consumer<T> consumer) {
         for (T e : list) {
             consumer.accept(e);

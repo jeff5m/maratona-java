@@ -24,6 +24,7 @@ public class LambdaTest {
                 return car.getColor().equals("verde");
             }
         };
+//        Target type - is the data type that Java expects, depending on where the expression appears
         Predicate<Car> carPredicateLambda = (Car car) -> car.getColor().equals("verde");
         System.out.println(carPredicate.test(new Car("verde", 2019)));
         System.out.println(carPredicateLambda.test(new Car("verde", 2019)));
