@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 import static java.util.Arrays.asList;
 
@@ -16,6 +18,13 @@ public class LambdaTest2 {
         List<String> colorsList = map(asList(new Car("grafite", 2018), new Car("vermelho", 2018)), (Car car) -> car.getColor());
         System.out.println(list);
         System.out.println(colorsList);
+
+//        Autoboxing and Unboxing cause a small reduce in performance
+//        predicate has specific interfaces to work with primitive types that are faster.
+        Predicate<Integer> evens = (Integer i) -> i % 2 == 0;
+        System.out.println(evens.test(1000));
+        IntPredicate odds = (int i) -> i % 2 == 1;
+        System.out.println(odds.test(3));
     }
 
 //    Some important Functional Interfaces:
