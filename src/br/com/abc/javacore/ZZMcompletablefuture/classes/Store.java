@@ -6,6 +6,15 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class Store {
+    private String name;
+
+    public Store(String name) {
+        this.name = name;
+    }
+
+    public Store() {
+    }
+
     public double getPrice() {
 //        goes far away get the price
         return calculatePrice();
@@ -31,15 +40,19 @@ public class Store {
 
     private double calculatePrice() {
         delay();
-        System.out.println(1/0);
+//        System.out.println(1/0);
         return ThreadLocalRandom.current().nextDouble() * 100;
     }
 
     private static void delay() {
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }
