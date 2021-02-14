@@ -14,13 +14,24 @@ public class Store {
     public Future<Double> getPriceAsync() {
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
         new Thread(() -> {
-            futurePrice.complete(calculatePrice());
+//            another approach, less recommended
+            try {
+                futurePrice.complete(calculatePrice());
+            } catch (Exception e) {
+                futurePrice.completeExceptionally(e);
+            }
         }).start();
         return futurePrice;
     }
 
+//   same thing done in the .getPriceAsync()
+    public Future<Double> getPriceAsyncTuning() {
+        return CompletableFuture.supplyAsync(this::calculatePrice);
+    }
+
     private double calculatePrice() {
         delay();
+        System.out.println(1/0);
         return ThreadLocalRandom.current().nextDouble() * 100;
     }
 
