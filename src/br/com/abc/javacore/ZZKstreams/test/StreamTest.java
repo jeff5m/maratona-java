@@ -31,7 +31,7 @@ public class StreamTest {
         List<String> names2 = persons
                 .stream()
                 .filter(p -> p.getAge() < 25)
-                .sorted(Comparator.comparing(Person::getName))
+                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
                 .limit(3)
                 .skip(1) // pass the n result returned by the operation
                 .map(Person::getName)
@@ -45,5 +45,7 @@ public class StreamTest {
                 .count());
 
         persons.stream().forEach(System.out::println);
+
+        persons.sort(Comparator.comparing(Person::getSalary));
     }
 }
