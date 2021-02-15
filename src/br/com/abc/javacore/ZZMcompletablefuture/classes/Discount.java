@@ -1,5 +1,6 @@
 package br.com.abc.javacore.ZZMcompletablefuture.classes;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class Discount {
@@ -32,7 +33,8 @@ public class Discount {
 
     private static void delay() {
         try {
-            TimeUnit.SECONDS.sleep(1);
+            int delay = ThreadLocalRandom.current().nextInt(500, 2000);
+            TimeUnit.MILLISECONDS.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
