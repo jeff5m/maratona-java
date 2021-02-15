@@ -17,7 +17,7 @@ public class NewStore {
     }
 
 //        return NomeDaLoja:Preco:CodigoDeDesconto
-    public String getPrice() {
+    public String getBudgetString() {
         double price = calculatePrice();
         Discount.Code code = Discount.Code.values()[ThreadLocalRandom.current().nextInt(Discount.Code.values().length)];
         return String.format("%s:%.2f:%s", this.name, price, code);

@@ -17,8 +17,12 @@ public class Discount {
     }
 
     public static String calculateDiscount(Budget budget) {
-        return String.format("%s o preco eh: %.2f",
-                budget.getStoreName(), calculation(budget.getPrice(), budget.getDiscountCode()));
+        return String.format("%s o preco original: %.2f, desconto: %d, " +
+                        " preco final: %.2f",
+                budget.getStoreName(),
+                budget.getPrice(),
+                budget.getDiscountCode().getPercentage(),
+                calculation(budget.getPrice(), budget.getDiscountCode()));
     }
 
     private static double calculation(double price, Code code) {
